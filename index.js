@@ -1,7 +1,10 @@
 const Web3 = require('web3')
 const counter = require('./counter-abi.json')
 
-const webSocketProvider = new Web3.providers.WebsocketProvider("127.0.0.1:8545")
+const contractAddress = ""
+const rpcUrl = "127.0.0.1:8545"
+
+const webSocketProvider = new Web3.providers.WebsocketProvider(rpcUrl)
 
 const web3 = new Web3(webSocketProvider)
 
