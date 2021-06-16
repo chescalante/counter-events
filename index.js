@@ -1,7 +1,7 @@
 const Web3 = require('web3')
 const counter = require('./counter-abi.json')
 
-let contractAddress = "0xfB602d3E9F3941cCd6792447d12221d54F6C51A0"
+let contractAddress = "0xFB602D3e9F3941cCD6792447D12221d54F6c51A0"
 const rpcWsUrl = "ws://127.0.0.1:4445"
 
 const init = () => {
