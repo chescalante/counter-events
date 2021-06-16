@@ -33,8 +33,9 @@ const init = () => {
     contract.events.allEvents({ fromBlock: 0 }, function(error, event){ console.log("x",event)})
 
     setTimeout(()=>{
-      contract.getPastEvents("Counted",{ fromBlock: 1932809, toBlock:'latest' }, function(error, event){ console.log(error, event)})
-    },30000)
+      console.log("all")
+      contract.getPastEvents("Counted",{ fromBlock: 1932809, toBlock:'latest' }).then((r)=>{ console.log(r)})
+    },60000)
 
     console.log("Ready")
   }
