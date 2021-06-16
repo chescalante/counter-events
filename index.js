@@ -30,6 +30,8 @@ const init = () => {
     })
     .on('error', console.error);
 
+    contract.events.allEvents({ fromBlock: 1932693 }, function(error, event){ console.log("x",event)})
+
     console.log("Ready")
   }
 
