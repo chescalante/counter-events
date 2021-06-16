@@ -52,14 +52,18 @@ const init = async () => {
         }
     )
 
-    const gas = await contract.methods
-        .inc()
-        .estimateGas()
+    contract.events.Counted(
+      { fromBlock: 1932693 }, function(error, event){ console.log(event); })
+    .on('data', function(event){
+        console.log(event); // same results as the optional callback above
+    })
+    .on('changed', function(event){
+        // remove event from local database
+    })
+    .on('error', console.error);
 
-    await contract.methods
-        .inc()
-        .send({ from: web3.eth.defaultAccount, gas: gas })
-}
+    console.log("Ready")
+  }
 
 init()
 
