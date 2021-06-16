@@ -5,12 +5,12 @@ let contractAddress = "0xFB602D3e9F3941cCD6792447D12221d54F6c51A0"
 const rpcWsUrl = "ws://127.0.0.1:4445"
 
 const init = () => {
-    console.log("contractAddress", contractAddress)
+    console.log("contractAddress", contractAddress.toLowerCase())
     const webSocketProvider = new Web3.providers.WebsocketProvider(rpcWsUrl)
 
     const web3 = new Web3(webSocketProvider)
 
-    const contract = new web3.eth.Contract(counter.abi, contractAddress)
+    const contract = new web3.eth.Contract(counter.abi, contractAddress.toLowerCase())
 
     contract.events.Counted(
         { fromBlock: 1932693 },
