@@ -7,7 +7,7 @@ const rpcWsUrl = "ws://127.0.0.1:4445"
 const init = () => {
     console.log("contractAddress", contractAddress)
     const webSocketProvider = new ethers.providers.WebSocketProvider(  rpcWsUrl ) 
-    const contract = new web3.eth.Contract(counter.abi, contractAddress)
+    const contract = new Contract(contractAddress, counter.abi, webSocketProvider);
 
     contract.on("Counted", function(event){ console.log(event)})
 
