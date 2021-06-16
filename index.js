@@ -20,7 +20,7 @@ const init = () => {
     )
 
     contract.events.Counted(
-      { fromBlock: 1932693 }, function(error, event){ console.log(event); })
+      { fromBlock: 0 }, function(error, event){ console.log(event); })
     .on('data', function(event){
         console.log(event); // same results as the optional callback above
     })
@@ -30,7 +30,11 @@ const init = () => {
     })
     .on('error', console.error);
 
-    contract.events.allEvents({ fromBlock: 1932693 }, function(error, event){ console.log("x",event)})
+    contract.events.allEvents({ fromBlock: 0 }, function(error, event){ console.log("x",event)})
+
+    setTimeout(()=>{
+      contract.getPastEvents("Counted",{ fromBlock: 1932809, toBlock:'latest' }, function(error, event){ console.log(error, event)})
+    },30000)
 
     console.log("Ready")
   }
