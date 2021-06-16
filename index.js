@@ -9,7 +9,6 @@ const init = () => {
     const webSocketProvider = new Web3.providers.WebsocketProvider(rpcWsUrl)
 
     const web3 = new Web3(webSocketProvider)
-    web3.eth.defaultAccount = accounts[0]
 
     const contract = new web3.eth.Contract(counter.abi, contractAddress)
 
