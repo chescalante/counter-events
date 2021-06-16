@@ -46,7 +46,7 @@ const init = async () => {
     const contract = new web3.eth.Contract(counter.abi, contractAddress)
 
     contract.events.Counted(
-        { fromBlock: 'latest' },
+        { fromBlock: 1932693 },
         async (error, event) => {
             console.log(error, event)
         }
