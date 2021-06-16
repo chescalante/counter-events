@@ -13,7 +13,7 @@ const init = () => {
     const contract = new web3.eth.Contract(counter.abi, contractAddress.toLowerCase())
 
     contract.events.Counted(
-        { fromBlock: 1932693 },
+        { fromBlock: 0 },
         async (error, event) => {
             console.log(error, event)
         }
