@@ -27,7 +27,7 @@ const init = async () => {
         .inc()
         .estimateGas()
 
-    const tx = await contract
+    const tx = await contract.methods
         .inc()
         .send({ from: accounts[0], gas: executeGas*2 })
 
