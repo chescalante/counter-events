@@ -7,6 +7,10 @@ const rpcHttpUrl = "http://127.0.0.1:4444"
 
 const init = () => {
     console.log("contractAddress", contractAddress.toLowerCase())
+    const web3Http = new Web3(rpcHttpUrl)
+    const contractHttp = new web3Http.eth.Contract(counter.abi, contractAddress.toLowerCase())
+    let fromBlockNumber = await web3Http.eth.getBlockNumber() - 100
+    
     const webSocketProvider = new Web3.providers.WebsocketProvider(rpcWsUrl)
 
     const web3 = new Web3(webSocketProvider)
@@ -14,40 +18,37 @@ const init = () => {
     const contract = new web3.eth.Contract(counter.abi, contractAddress.toLowerCase())
 
     contract.events.Counted(
-        { fromBlock: 0 },
-        async (error, event) => {
-            console.log(error, event)
+        { fromBlock: fromBlockNumber },
+        (error, event) => {
+            console.log("websocket:counted", error, event)
         }
     )
 
     contract.events.Counted(
-      { fromBlock: 0 }, function(error, event){ console.log(event); })
+      { fromBlock: fromBlockNumber }, function(error, event){ console.log("websocket:default", event); })
     .on('data', function(event){
-        console.log(event); // same results as the optional callback above
+        console.log("websocket:data", event);
     })
     .on('changed', function(event){
-      console.log('changed')
-        // remove event from local database
+      console.log("websocket:changed", event)
     })
-    .on('error', console.error);
+    .on('error', function(error){ console.log("websocket:error", error)});
 
-    contract.events.allEvents({ fromBlock: 0 }, function(error, event){ console.log("x",event)})
+    contract.events.allEvents({ fromBlock: fromBlockNumber }, function(error, event){ console.log("websocket:all:events", event)})
 
     // with getPastEvents
 
-    const web3Http = new Web3(rpcHttpUrl)
-    const contractHttp = new web3Http.eth.Contract(counter.abi, contractAddress.toLowerCase())
-    let fromBlockNumber = await web3Http.eth.getBlockNumber() - 100
+    
 
-    setInterval(()=>{
+    setInterval(async () => {
       const toBlockNumber = await web3Http.eth.getBlockNumber()
 
       console.log(`getting events from ${fromBlockNumber} to ${toBlockNumber}`)
 
-      contractHttp.getPastEvents("Counted",{ fromBlock: fromBlockNumber, toBlock: toBlockNumber }).then((r)=>{ 
-        console.log("getPastEvents", r)
-      })
-
+      const result = await contractHttp.getPastEvents("Counted",{ fromBlock: fromBlockNumber, toBlock: toBlockNumber }) 
+      
+      console.log("getPastEvents", result)
+      
       fromBlockNumber = toBlockNumber
     }, 60000)
 
