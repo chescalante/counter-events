@@ -14,7 +14,7 @@ const init = async () => {
       providerOrUrl: rpcHttpUrl,
       numberOfAddresses: 1,
       shareNonce: true,
-      derivationPath: "m/44'/137'/0'/0/"
+      derivationPath: "m/44'/60'/0'/0"
     })
 
     const web3 = new Web3(hdWalletProvider)
@@ -22,7 +22,7 @@ const init = async () => {
     const contract = new web3.eth.Contract(counter.abi, contractAddress.toLowerCase())
 
     const accounts = await web3.eth.getAccounts()
-
+    console.log("Wallet: ", accounts[0])
     const executeGas = await contract.methods
         .inc()
         .estimateGas()
